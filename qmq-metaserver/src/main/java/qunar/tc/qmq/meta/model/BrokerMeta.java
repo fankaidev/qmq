@@ -16,12 +16,14 @@
 
 package qunar.tc.qmq.meta.model;
 
+import lombok.Data;
 import qunar.tc.qmq.meta.BrokerRole;
 
 /**
  * @author keli.wang
  * @since 2018-11-29
  */
+@Data
 public class BrokerMeta {
     private final String group;
     private final BrokerRole role;
@@ -39,27 +41,4 @@ public class BrokerMeta {
         this.syncPort = syncPort;
     }
 
-    public String getGroup() {
-        return group;
-    }
-
-    public BrokerRole getRole() {
-        return role;
-    }
-
-    public String getHostname() {
-        return hostname;
-    }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public int getServePort() {
-        return servePort;
-    }
-
-    public int getSyncPort() {
-        return syncPort;
-    }
 }

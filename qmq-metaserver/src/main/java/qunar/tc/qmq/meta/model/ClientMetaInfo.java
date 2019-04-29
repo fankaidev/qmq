@@ -16,10 +16,13 @@
 
 package qunar.tc.qmq.meta.model;
 
+import lombok.Data;
+
 /**
  * @author yunfeng.yang
  * @since 2017/9/25
  */
+@Data
 public class ClientMetaInfo {
     private String subject;
     private int clientTypeCode;
@@ -28,75 +31,4 @@ public class ClientMetaInfo {
     private String clientId;
     private String consumerGroup;
 
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public int getClientTypeCode() {
-        return clientTypeCode;
-    }
-
-    public void setClientTypeCode(int clientTypeCode) {
-        this.clientTypeCode = clientTypeCode;
-    }
-
-    public String getAppCode() {
-        return appCode;
-    }
-
-    public void setAppCode(String appCode) {
-        this.appCode = appCode;
-    }
-
-    public String getRoom() {
-        return room;
-    }
-
-    public void setRoom(String room) {
-        this.room = room;
-    }
-
-    public String getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
-    }
-
-    public String getConsumerGroup() {
-        return consumerGroup;
-    }
-
-    public void setConsumerGroup(String consumerGroup) {
-        this.consumerGroup = consumerGroup;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ClientMetaInfo)) return false;
-
-        ClientMetaInfo that = (ClientMetaInfo) o;
-
-        if (clientTypeCode != that.clientTypeCode) return false;
-        if (subject != null ? !subject.equals(that.subject) : that.subject != null) return false;
-        if (appCode != null ? !appCode.equals(that.appCode) : that.appCode != null) return false;
-        if (clientId != null ? !clientId.equals(that.clientId) : that.clientId != null) return false;
-        return consumerGroup != null ? consumerGroup.equals(that.consumerGroup) : that.consumerGroup == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = subject != null ? subject.hashCode() : 0;
-        result = 31 * result + clientTypeCode;
-        result = 31 * result + (appCode != null ? appCode.hashCode() : 0);
-        result = 31 * result + (clientId != null ? clientId.hashCode() : 0);
-        result = 31 * result + (consumerGroup != null ? consumerGroup.hashCode() : 0);
-        return result;
-    }
 }

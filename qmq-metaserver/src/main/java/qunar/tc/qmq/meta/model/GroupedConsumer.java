@@ -16,12 +16,15 @@
 
 package qunar.tc.qmq.meta.model;
 
+import lombok.Data;
+
 import java.util.List;
 
 /**
  * @author keli.wang
  * @since 2017/12/5
  */
+@Data
 public class GroupedConsumer {
     private String namespace;
     private String prefix;
@@ -38,43 +41,4 @@ public class GroupedConsumer {
     public GroupedConsumer() {
     }
 
-    public String getNamespace() {
-        return namespace;
-    }
-
-    public void setNamespace(String namespace) {
-        this.namespace = namespace;
-    }
-
-    public String getPrefix() {
-        return prefix;
-    }
-
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
-
-    public String getConsumerGroup() {
-        return consumerGroup;
-    }
-
-    public void setConsumerGroup(String consumerGroup) {
-        this.consumerGroup = consumerGroup;
-    }
-
-    public List<String> getEndPoint() {
-        return endPoint;
-    }
-
-    public void setEndPoint(List<String> endPoint) {
-        this.endPoint = endPoint;
-    }
-
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
 }

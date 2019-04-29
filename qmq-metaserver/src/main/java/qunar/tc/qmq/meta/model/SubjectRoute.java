@@ -16,47 +16,19 @@
 
 package qunar.tc.qmq.meta.model;
 
+import lombok.Data;
+
 import java.util.List;
 
 /**
  * @author yunfeng.yang
  * @since 2017/8/31
  */
+@Data
 public class SubjectRoute {
     private String subject;
     private List<String> brokerGroups;
     private int version;
     private long updateTime;
 
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public List<String> getBrokerGroups() {
-        return brokerGroups;
-    }
-
-    public void setBrokerGroups(List<String> brokerGroups) {
-        this.brokerGroups = brokerGroups;
-    }
-
-    public int getVersion() {
-        return version;
-    }
-
-    public void setVersion(int version) {
-        this.version = version;
-    }
-
-    public long getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(long updateTime) {
-        this.updateTime = updateTime;
-    }
 }

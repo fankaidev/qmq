@@ -16,10 +16,13 @@
 
 package qunar.tc.qmq.meta.model;
 
+import lombok.Data;
+
 /**
  * @author keli.wang
  * @since 2018/7/30
  */
+@Data
 public class ReadonlyBrokerGroupSetting {
     private final String subject;
     private final String brokerGroup;
@@ -29,19 +32,4 @@ public class ReadonlyBrokerGroupSetting {
         this.brokerGroup = brokerGroup;
     }
 
-    public String getSubject() {
-        return subject;
-    }
-
-    public String getBrokerGroup() {
-        return brokerGroup;
-    }
-
-    @Override
-    public String toString() {
-        return "ReadonlyBrokerGroup{" +
-                "subject='" + subject + '\'' +
-                ", brokerGroup='" + brokerGroup + '\'' +
-                '}';
-    }
 }

@@ -16,11 +16,13 @@
 
 package qunar.tc.qmq.meta.model;
 
+import lombok.Data;
 import qunar.tc.qmq.base.OnOfflineState;
 
 /**
  * yiqun.fan@qunar.com 2018/2/28
  */
+@Data
 public class ClientOfflineState {
 
     private long id;
@@ -29,43 +31,4 @@ public class ClientOfflineState {
     private String consumerGroup;
     private OnOfflineState state;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public String getConsumerGroup() {
-        return consumerGroup;
-    }
-
-    public void setConsumerGroup(String consumerGroup) {
-        this.consumerGroup = consumerGroup;
-    }
-
-    public OnOfflineState getState() {
-        return state;
-    }
-
-    public void setState(OnOfflineState state) {
-        this.state = state;
-    }
 }

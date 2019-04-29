@@ -16,44 +16,15 @@
 
 package qunar.tc.qmq.meta.model;
 
+import lombok.Data;
+
 /**
  * @author leoliang
  */
+@Data
 public class SubjectInfo {
     private String name;
     private String tag;
     private long updateTime;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
-
-    public long getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(long updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    @Override
-    public String toString() {
-        return "SubjectInfo{" +
-                "name='" + name + '\'' +
-                ", tag='" + tag + '\'' +
-                ", updateTime=" + updateTime +
-                '}';
-    }
 }
