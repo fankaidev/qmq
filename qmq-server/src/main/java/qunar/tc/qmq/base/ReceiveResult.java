@@ -16,10 +16,13 @@
 
 package qunar.tc.qmq.base;
 
+import lombok.Data;
+
 /**
  * @author yunfeng.yang
  * @since 2017/8/8
  */
+@Data
 public class ReceiveResult {
     private final String messageId;
     private final int code;
@@ -33,29 +36,4 @@ public class ReceiveResult {
         this.endOffsetOfMessage = endOffsetOfMessage;
     }
 
-    public String getMessageId() {
-        return messageId;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public long getEndOffsetOfMessage() {
-        return endOffsetOfMessage;
-    }
-
-    @Override
-    public String toString() {
-        return "ReceiveResult{" +
-                "messageId='" + messageId + '\'' +
-                ", code=" + code +
-                ", remark='" + remark + '\'' +
-                ", endOffsetOfMessage=" + endOffsetOfMessage +
-                '}';
-    }
 }

@@ -17,6 +17,7 @@
 package qunar.tc.qmq.configuration;
 
 import com.google.common.eventbus.Subscribe;
+import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qunar.tc.qmq.meta.BrokerAcquireMetaResponse;
@@ -27,6 +28,7 @@ import qunar.tc.qmq.utils.NetworkUtils;
  * @author yunfeng.yang
  * @since 2017/8/19
  */
+@Data
 public final class BrokerConfig {
     private static final Logger LOG = LoggerFactory.getLogger(BrokerConfig.class);
 

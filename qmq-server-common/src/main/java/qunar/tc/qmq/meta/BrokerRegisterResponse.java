@@ -16,20 +16,16 @@
 
 package qunar.tc.qmq.meta;
 
+import lombok.Data;
+
 import java.util.List;
 
 /**
  * @author yunfeng.yang
  * @since 2017/9/1
  */
+@Data
 public class BrokerRegisterResponse {
     private List<String> subjects;
 
-    public List<String> getSubjects() {
-        return subjects;
-    }
-
-    public void setSubjects(List<String> subjects) {
-        this.subjects = subjects;
-    }
 }

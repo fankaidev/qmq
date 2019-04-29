@@ -18,11 +18,13 @@ package qunar.tc.qmq.base;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
 /**
  * @author keli.wang
  * @since 2018/7/31
  */
+@Data
 public class ConsumerLag {
     private final long pull;
     private final long ack;
@@ -33,11 +35,4 @@ public class ConsumerLag {
         this.ack = ack;
     }
 
-    public long getPull() {
-        return pull;
-    }
-
-    public long getAck() {
-        return ack;
-    }
 }

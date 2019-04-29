@@ -16,37 +16,17 @@
 
 package qunar.tc.qmq.base;
 
+import lombok.Data;
+
 /**
  * @author: leix.xie
  * @date: 2018/9/14 16:06
  * @describe：
  */
+@Data
 public class ActionLogOffsetRequest {
     private String subject;
     private String group;
     private String consumerId;
 
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public String getGroup() {
-        return group;
-    }
-
-    public void setGroup(String group) {
-        this.group = group;
-    }
-
-    public String getConsumerId() {
-        return consumerId;
-    }
-
-    public void setConsumerId(String consumerId) {
-        this.consumerId = consumerId;
-    }
 }

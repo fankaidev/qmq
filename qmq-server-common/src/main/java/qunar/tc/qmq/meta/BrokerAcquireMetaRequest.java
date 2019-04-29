@@ -16,35 +16,15 @@
 
 package qunar.tc.qmq.meta;
 
+import lombok.Data;
+
 /**
  * @author keli.wang
  * @since 2017/9/26
  */
+@Data
 public class BrokerAcquireMetaRequest {
     private String hostname;
     private int port;
 
-    public String getHostname() {
-        return hostname;
-    }
-
-    public void setHostname(String hostname) {
-        this.hostname = hostname;
-    }
-
-    public int getPort() {
-        return port;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
-    }
-
-    @Override
-    public String toString() {
-        return "BrokerAcquireMetaRequest{" +
-                "hostname='" + hostname + '\'' +
-                ", port=" + port +
-                '}';
-    }
 }

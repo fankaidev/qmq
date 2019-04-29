@@ -16,10 +16,13 @@
 
 package qunar.tc.qmq.base;
 
+import lombok.Data;
+
 /**
  * @author yunfeng.yang
  * @since 2017/8/23
  */
+@Data
 public class WritePutActionResult {
     private final boolean status;
     private final long pullLogOffset;
@@ -33,7 +36,4 @@ public class WritePutActionResult {
         return status;
     }
 
-    public long getPullLogOffset() {
-        return pullLogOffset;
-    }
 }

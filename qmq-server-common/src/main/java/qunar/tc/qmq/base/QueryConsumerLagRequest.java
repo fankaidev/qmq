@@ -16,27 +16,15 @@
 
 package qunar.tc.qmq.base;
 
+import lombok.Data;
+
 /**
  * @author keli.wang
  * @since 2018/7/31
  */
+@Data
 public class QueryConsumerLagRequest {
     private String subject;
     private String group;
 
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public String getGroup() {
-        return group;
-    }
-
-    public void setGroup(String group) {
-        this.group = group;
-    }
 }

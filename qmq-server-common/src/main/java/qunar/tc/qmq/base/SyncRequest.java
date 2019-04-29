@@ -16,10 +16,13 @@
 
 package qunar.tc.qmq.base;
 
+import lombok.Data;
+
 /**
  * @author yunfeng.yang
  * @since 2017/8/18
  */
+@Data
 public class SyncRequest {
     private final long messageLogOffset;
     private final long actionLogOffset;
@@ -31,24 +34,4 @@ public class SyncRequest {
         this.actionLogOffset = actionLogOffset;
     }
 
-    public int getSyncType() {
-        return syncType;
-    }
-
-    public long getMessageLogOffset() {
-        return messageLogOffset;
-    }
-
-    public long getActionLogOffset() {
-        return actionLogOffset;
-    }
-
-    @Override
-    public String toString() {
-        return "SyncRequest{" +
-                "messageLogOffset=" + messageLogOffset +
-                ", actionLogOffset=" + actionLogOffset +
-                ", syncType=" + syncType +
-                '}';
-    }
 }

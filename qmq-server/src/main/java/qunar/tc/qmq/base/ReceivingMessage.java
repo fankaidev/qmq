@@ -17,11 +17,13 @@
 package qunar.tc.qmq.base;
 
 import com.google.common.util.concurrent.SettableFuture;
+import lombok.Data;
 
 /**
  * @author yunfeng.yang
  * @since 2017/8/8
  */
+@Data
 public class ReceivingMessage {
     private final RawMessage message;
     private final SettableFuture<ReceiveResult> promise;
@@ -34,16 +36,8 @@ public class ReceivingMessage {
         this.promise = SettableFuture.create();
     }
 
-    public RawMessage getMessage() {
-        return message;
-    }
-
     public SettableFuture<ReceiveResult> promise() {
         return promise;
-    }
-
-    public long getReceivedTime() {
-        return receivedTime;
     }
 
     public String getMessageId() {

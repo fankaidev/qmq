@@ -16,7 +16,8 @@
 
 package qunar.tc.qmq.base;
 
-import java.util.Objects;
+import lombok.Data;
+
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -25,6 +26,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * @author yunfeng.yang
  * @since 2017/8/1
  */
+@Data
 public class ActionLogOffsetResponse {
     private AtomicLong pullLogOffset;
     private AtomicLong ackLogOffset;
@@ -36,22 +38,6 @@ public class ActionLogOffsetResponse {
     public ActionLogOffsetResponse(final long pullLogOffset, final long ackLogOffset) {
         this.pullLogOffset = new AtomicLong(pullLogOffset);
         this.ackLogOffset = new AtomicLong(ackLogOffset);
-    }
-
-    public long getPullLogOffset() {
-        return pullLogOffset.get();
-    }
-
-    public void setPullLogOffset(long pullLogOffset) {
-        this.pullLogOffset.set(pullLogOffset);
-    }
-
-    public long getAckLogOffset() {
-        return ackLogOffset.get();
-    }
-
-    public void setAckLogOffset(long ackLogOffset) {
-        this.ackLogOffset.set(ackLogOffset);
     }
 
     public void pullLock() {
@@ -76,47 +62,6 @@ public class ActionLogOffsetResponse {
 
     public void ackUnLock() {
         ackLock.unlock();
-    }
-
-    public String getBrokerAddress() {
-        return brokerAddress;
-    }
-
-    public void setBrokerAddress(String brokerAddress) {
-        this.brokerAddress = brokerAddress;
-    }
-
-    @Override
-    public String toString() {
-        return "ActionLogOffsetResponse{" +
-                "pullLogOffset=" + pullLogOffset +
-                ", ackLogOffset=" + ackLogOffset +
-                ", brokerAddress='" + brokerAddress + '\'' +
-                '}';
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(pullLogOffset, ackLogOffset, brokerAddress);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        ActionLogOffsetResponse that = (ActionLogOffsetResponse) o;
-
-        if (!pullLogOffset.equals(that.pullLogOffset)) {
-            return false;
-        }
-        if (!ackLogOffset.equals(that.ackLogOffset)) {
-            return false;
-        }
-        return brokerAddress.equals(that.brokerAddress);
     }
 
 }
