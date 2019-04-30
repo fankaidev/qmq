@@ -22,6 +22,7 @@ import io.opentracing.util.GlobalTracer;
 import qunar.tc.qmq.Message;
 import qunar.tc.qmq.MessageProducer;
 import qunar.tc.qmq.MessageSendStateListener;
+import qunar.tc.qmq.ProduceMessage;
 import qunar.tc.qmq.TransactionProvider;
 import qunar.tc.qmq.base.BaseMessage;
 import qunar.tc.qmq.common.ClientIdProvider;
@@ -108,7 +109,7 @@ public class MessageProducerProvider implements MessageProducer {
                 message.setDurable(false);
             }
 
-            ProduceMessageImpl pm = initProduceMessage(message, listener);
+            ProduceMessage pm = initProduceMessage(message, listener);
             if (!message.isDurable()) {
                 pm.send();
                 return;

@@ -16,9 +16,12 @@
 
 package qunar.tc.qmq.producer;
 
+import lombok.Data;
+
 /**
  * @author zhenyu.nie created on 2017 2017/7/5 11:57
  */
+@Data
 public class ConfigCenter {
     private static final ConfigCenter INSTANCE = new ConfigCenter();
 
@@ -35,46 +38,6 @@ public class ConfigCenter {
     private int sendTryCount = 10;
 
     private boolean syncSend = false;
-
-    public int getMaxQueueSize() {
-        return maxQueueSize;
-    }
-
-    public void setMaxQueueSize(int maxQueueSize) {
-        this.maxQueueSize = maxQueueSize;
-    }
-
-    public int getSendThreads() {
-        return sendThreads;
-    }
-
-    public void setSendThreads(int sendThreads) {
-        this.sendThreads = sendThreads;
-    }
-
-    public int getSendBatch() {
-        return sendBatch;
-    }
-
-    public void setSendBatch(int sendBatch) {
-        this.sendBatch = sendBatch;
-    }
-
-    public long getSendTimeoutMillis() {
-        return sendTimeoutMillis;
-    }
-
-    public int getSendTryCount() {
-        return sendTryCount;
-    }
-
-    public void setSendTryCount(int sendTryCount) {
-        this.sendTryCount = sendTryCount;
-    }
-
-    public boolean isSyncSend() {
-        return syncSend;
-    }
 
     public int getMinExpiredTime() {
         return MIN_EXPIRED_TIME;
