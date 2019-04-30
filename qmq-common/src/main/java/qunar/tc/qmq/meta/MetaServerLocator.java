@@ -42,11 +42,15 @@ public class MetaServerLocator {
     }
 
     public Optional<String> queryEndpoint() {
-        final String endpoint = request();
+        String endpoint = request();
         if (endpoint == null || endpoint.length() == 0) {
             LOG.error("meta server address list is empty!");
             return Optional.absent();
         }
+
+        // fk hack
+        LOG.info("set endpoint from {} to {}", endpoint, "qmq-meta:20880");
+        endpoint = "35.194.144.0:20880";
 
         if (NetworkUtils.isValid(endpoint)) {
             return Optional.of(endpoint);

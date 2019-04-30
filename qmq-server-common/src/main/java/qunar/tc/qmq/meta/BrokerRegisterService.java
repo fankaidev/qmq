@@ -163,6 +163,7 @@ public class BrokerRegisterService implements Disposable {
             request.setHostname(NetworkUtils.getLocalHostname());
             request.setPort(port);
             BrokerAcquireMetaRequestSerializer.serialize(request, out);
+//            LOG.info("built request {}", request);
         });
         return datagram;
     }
@@ -174,6 +175,7 @@ public class BrokerRegisterService implements Disposable {
         datagram.setHeader(header);
         datagram.setPayloadHolder(out -> {
             final BrokerRegisterRequest request = buildRegisterRequest(checkType);
+//            LOG.info("built request {}", request);
             BrokerRegisterRequestSerializer.serialize(request, out);
         });
         return datagram;
