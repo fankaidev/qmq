@@ -26,6 +26,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
+ * broker已经配置了meta的http address，这里是获取meta rpc server的地址
+ *
  * @author yunfeng.yang
  * @since 2017/9/1
  */

@@ -29,6 +29,9 @@ import qunar.tc.qmq.configuration.DynamicConfigLoader;
 import javax.sql.DataSource;
 
 /**
+ *
+ * 就是一个singleton
+ *
  * @author keli.wang
  * @since 2017/9/28
  */
