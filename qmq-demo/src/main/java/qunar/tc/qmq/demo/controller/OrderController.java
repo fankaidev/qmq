@@ -45,4 +45,12 @@ public class OrderController {
         orderService.placeOrder(order);
     }
 
+    @PostMapping("/placeOrderDirect")
+    public void placeOrderDirect(long orderId, String name) {
+        Order order = new Order();
+        order.setOrderId(orderId);
+        order.setName(name);
+        orderService.placeOrderDirect(order);
+    }
+
 }

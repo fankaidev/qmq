@@ -40,6 +40,10 @@ public class OrderService {
 
     @Transactional
     public void placeOrder(Order order) {
+        placeOrderDirect(order);
+    }
+
+    public void placeOrderDirect(Order order) {
         final Message message = producer.generateMessage("order.changed");
         message.setProperty("orderId", order.getOrderId());
         message.setProperty("name", order.getName());
