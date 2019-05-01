@@ -48,7 +48,7 @@ public class OrderService {
         message.setProperty("orderId", order.getOrderId());
         message.setProperty("name", order.getName());
         StringBuffer buf = new StringBuffer();
-        for (int i = 0; i < 10000; ++i) {
+        for (int i = 0; i < 500; ++i) {
             buf.append("1234567890");
         }
         message.setProperty("content", buf.toString());
