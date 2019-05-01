@@ -119,7 +119,9 @@ public class SendMessageWorker {
         }
 
         try {
+            // 存储message
             ReceiveResult result = messageStore.putMessage(message);
+            // 设置结果并同步到slave
             offer(message, result);
         } catch (Throwable t) {
             error(message, t);
