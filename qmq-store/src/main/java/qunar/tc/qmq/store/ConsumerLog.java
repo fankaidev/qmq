@@ -141,36 +141,6 @@ public class ConsumerLog {
         logManager.deleteExpiredSegments(config.getConsumerLogRetentionMs());
     }
 
-    private static class ConsumerLogMessage {
-        private final long sequence;
-        private final long offset;
-        private final int size;
-        private final short headerSize;
-
-        private ConsumerLogMessage(long sequence, long offset, int size, short headerSize) {
-            this.sequence = sequence;
-            this.offset = offset;
-            this.size = size;
-            this.headerSize = headerSize;
-        }
-
-        public long getSequence() {
-            return sequence;
-        }
-
-        public long getOffset() {
-            return offset;
-        }
-
-        public int getSize() {
-            return size;
-        }
-
-        public short getHeaderSize() {
-            return headerSize;
-        }
-    }
-
     private static class ConsumerLogMessageAppender implements MessageAppender<ConsumerLogMessage, Void> {
         private final ByteBuffer workingBuffer = ByteBuffer.allocate(CONSUMER_LOG_UNIT_BYTES);
 
@@ -186,6 +156,8 @@ public class ConsumerLog {
             workingBuffer.putInt(message.getSize());
             workingBuffer.putShort(message.getHeaderSize());
             targetBuffer.put(workingBuffer.array(), 0, CONSUMER_LOG_UNIT_BYTES);
+            LOG.info("wroteOffset={}, baseOffset={}, target={}, message={}",
+                    wroteOffset, baseOffset, targetBuffer.position(), message);
             return new AppendMessageResult<>(AppendMessageStatus.SUCCESS, wroteOffset, CONSUMER_LOG_UNIT_BYTES);
         }
     }

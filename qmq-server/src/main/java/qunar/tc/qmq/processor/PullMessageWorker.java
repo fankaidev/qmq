@@ -16,6 +16,8 @@
 
 package qunar.tc.qmq.processor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import qunar.tc.qmq.base.PullMessageResult;
 import qunar.tc.qmq.concurrent.ActorSystem;
 import qunar.tc.qmq.monitor.QMon;
@@ -31,6 +33,7 @@ import java.util.concurrent.ConcurrentMap;
  * @since 2017/10/30
  */
 class PullMessageWorker implements ActorSystem.Processor<PullMessageProcessor.PullEntry> {
+    private static final Logger LOG = LoggerFactory.getLogger(PullMessageWorker.class);
 
     private static final Object HOLDER = new Object();
 
@@ -65,12 +68,18 @@ class PullMessageWorker implements ActorSystem.Processor<PullMessageProcessor.Pu
             return true;
         }
 
+
         final PullMessageResult pullMessageResult = store.findMessages(entry.pullRequest);
 
         if (pullMessageResult == PullMessageResult.FILTER_EMPTY ||
                 pullMessageResult.getMessageNum() > 0
                 || entry.isPullOnce()
                 || entry.isTimeout()) {
+
+            if (pullMessageResult.getMessageNum() > 0) {
+                LOG.info("process pull {}", entry.pullRequest);
+            }
+
             entry.processMessageResult(pullMessageResult);
             return true;
         }

@@ -144,6 +144,7 @@ public class ConsumerSequenceManager {
                 QMon.consumerDuplicateAckCountInc(subject, group, (int) (confirmedAckSequence - lastPullSequence));
                 return true;
             }
+            LOG.info("put ack last={}, confirmed={}, {}", lastPullSequence, confirmedAckSequence, ackEntry);
             final long lostAckCount = firstPullSequence - confirmedAckSequence;
             if (lostAckCount <= 0) {
                 LOG.warn("receive some duplicate ack, ackEntry:{}, consumerSequence:{}", ackEntry, consumerSequence);

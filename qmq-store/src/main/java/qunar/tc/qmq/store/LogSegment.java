@@ -84,7 +84,9 @@ public class LogSegment extends ReferenceObject {
 
         final ByteBuffer buffer = mappedByteBuffer.slice();
         buffer.position(currentPos);
+        LOG.info("append, current={}", currentPos);
         final AppendMessageResult<R> result = appender.doAppend(getBaseOffset(), buffer, fileSize - currentPos, message);
+        LOG.info("append, wrote={} {}, wrote pos={}", result.getWroteBytes(), result.getWroteOffset(), this.wrotePosition.get());
         this.wrotePosition.addAndGet(result.getWroteBytes());
         return result;
     }

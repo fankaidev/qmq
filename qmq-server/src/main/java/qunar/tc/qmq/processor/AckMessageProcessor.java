@@ -54,6 +54,7 @@ public class AckMessageProcessor extends AbstractRequestProcessor {
     @Override
     public CompletableFuture<Datagram> processRequest(ChannelHandlerContext ctx, RemotingCommand command) {
         final AckRequest ackRequest = deserializeAckRequest(command);
+//        LOG.info("process ack {}", ackRequest);
 
         BrokerStats.getInstance().getLastMinuteAckRequestCount().add(1);
         if (isInvalidRequest(ackRequest)) {

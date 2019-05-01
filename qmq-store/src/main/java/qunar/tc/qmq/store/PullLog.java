@@ -16,6 +16,8 @@
 
 package qunar.tc.qmq.store;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import qunar.tc.qmq.monitor.QMon;
 
 import java.io.File;
@@ -30,6 +32,7 @@ import java.util.List;
 public class PullLog {
     private static final int PULL_LOG_UNIT_BYTES = 8; // 8 bytes message sequence
     private static final int PULL_LOG_SIZE = PULL_LOG_UNIT_BYTES * 10_000_000; // TODO(keli.wang): to config
+    private static final Logger LOG = LoggerFactory.getLogger(PullLog.class);
 
     private final StorageConfig config;
     private final LogManager logManager;
@@ -158,7 +161,12 @@ public class PullLog {
             targetBuffer.put(workingBuffer.array(), 0, PULL_LOG_UNIT_BYTES);
 
             final long messageIndex = wroteOffset / PULL_LOG_UNIT_BYTES;
-            return new AppendMessageResult<>(AppendMessageStatus.SUCCESS, wroteOffset, PULL_LOG_UNIT_BYTES, new MessageSequence(messageIndex, wroteOffset));
+
+            MessageSequence messageSequence = new MessageSequence(messageIndex, wroteOffset);
+            LOG.info("wroteOffset={}, baseOffset={}, target={}, size={}, seq={}",
+                    wroteOffset, baseOffset, targetBuffer.position(), PULL_LOG_UNIT_BYTES, messageSequence);
+            return new AppendMessageResult<>(AppendMessageStatus.SUCCESS, wroteOffset, PULL_LOG_UNIT_BYTES,
+                    messageSequence);
         }
     }
 

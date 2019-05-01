@@ -16,6 +16,8 @@
 
 package qunar.tc.qmq.processor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import qunar.tc.qmq.concurrent.ActorSystem;
 import qunar.tc.qmq.consumer.ConsumerSequenceManager;
 import qunar.tc.qmq.monitor.QMon;
@@ -30,6 +32,7 @@ import qunar.tc.qmq.util.RemotingBuilder;
 class AckMessageWorker implements ActorSystem.Processor<AckMessageProcessor.AckEntry> {
     private final ActorSystem actorSystem;
     private final ConsumerSequenceManager consumerSequenceManager;
+    private static final Logger LOG = LoggerFactory.getLogger(AckMessageWorker.class);
 
     AckMessageWorker(final ActorSystem actorSystem, final ConsumerSequenceManager consumerSequenceManager) {
         this.actorSystem = actorSystem;
@@ -42,6 +45,8 @@ class AckMessageWorker implements ActorSystem.Processor<AckMessageProcessor.AckE
 
     @Override
     public boolean process(final AckMessageProcessor.AckEntry ackEntry, ActorSystem.Actor<AckMessageProcessor.AckEntry> self) {
+//        LOG.info("process ack {}", ackEntry);
+
         Datagram response = RemotingBuilder.buildEmptyResponseDatagram(CommandCode.SUCCESS, ackEntry.getRequestHeader());
         try {
             if (!consumerSequenceManager.putAckActions(ackEntry)) {

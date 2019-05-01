@@ -65,6 +65,8 @@ public class SendMessageProcessor extends AbstractRequestProcessor {
             return CompletableFuture.completedFuture(response);
         }
 
+        LOG.info("process send messages size={}", messages.size());
+
         BrokerStats.getInstance().getLastMinuteSendRequestCount().add(messages.size());
 
         final ListenableFuture<Datagram> result = sendMessageWorker.receive(messages, command);

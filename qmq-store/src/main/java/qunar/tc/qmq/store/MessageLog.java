@@ -281,7 +281,13 @@ public class MessageLog implements AutoCloseable {
                 consumerLogManager.incOffset(subject);
 
                 final long payloadOffset = wroteOffset + headerSize;
-                return new AppendMessageResult<>(AppendMessageStatus.SUCCESS, wroteOffset, recordSize, new MessageSequence(sequence, payloadOffset));
+
+                MessageSequence messageSequence = new MessageSequence(sequence, payloadOffset);
+
+                LOG.info("wroteOffset={}, baseOffset={}, target={}, recordSize={}, seq={}",
+                        wroteOffset, baseOffset, targetBuffer.position(), recordSize, messageSequence);
+                return new AppendMessageResult<>(AppendMessageStatus.SUCCESS, wroteOffset,
+                        recordSize, messageSequence);
             }
         }
 

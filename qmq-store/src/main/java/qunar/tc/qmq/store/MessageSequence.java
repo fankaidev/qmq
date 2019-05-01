@@ -16,10 +16,13 @@
 
 package qunar.tc.qmq.store;
 
+import lombok.Data;
+
 /**
  * @author keli.wang
  * @since 2017/8/19
  */
+@Data
 public class MessageSequence {
     private final long sequence;
     private final long physicalOffset;
@@ -29,11 +32,4 @@ public class MessageSequence {
         this.physicalOffset = physicalOffset;
     }
 
-    public long getSequence() {
-        return sequence;
-    }
-
-    public long getPhysicalOffset() {
-        return physicalOffset;
-    }
 }
