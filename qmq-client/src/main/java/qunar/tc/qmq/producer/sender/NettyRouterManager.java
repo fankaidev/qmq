@@ -68,7 +68,6 @@ public class NettyRouterManager extends AbstractRouterManager {
         Map<String, Object> attrs = message.getAttrs();
         if (attrs == null) return;
         for (Map.Entry<String, Object> entry : attrs.entrySet()) {
-            // fk: bug ?
             if (entry.getValue() == null) return;
             if (!(entry.getValue() instanceof String)) return;
 
