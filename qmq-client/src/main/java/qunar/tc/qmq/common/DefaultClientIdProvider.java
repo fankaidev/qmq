@@ -44,7 +44,8 @@ class DefaultClientIdProvider implements ClientIdProvider {
         }
 
         try {
-            return Hashing.md5().hashString(location, Charsets.UTF_8).toString();
+            // hack , allow multiple consumers in same host
+            return Hashing.md5().hashString(location + UUID.randomUUID(), Charsets.UTF_8).toString();
         } catch (Exception e) {
             LOG.error("compute md5sum for jar package location failed.", e);
         }

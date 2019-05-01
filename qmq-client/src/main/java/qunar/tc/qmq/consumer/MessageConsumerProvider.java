@@ -17,7 +17,10 @@ package qunar.tc.qmq.consumer;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import qunar.tc.qmq.*;
+import qunar.tc.qmq.broker.impl.BrokerServiceImpl;
 import qunar.tc.qmq.common.ClientIdProvider;
 import qunar.tc.qmq.common.ClientIdProviderFactory;
 import qunar.tc.qmq.config.NettyClientConfigManager;
@@ -57,6 +60,7 @@ public class MessageConsumerProvider implements MessageConsumer {
         this.pullRegister = new PullRegister();
         this.pullConsumerFactory = new PullConsumerFactory(this.pullRegister);
     }
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessageConsumerProvider.class);
 
     @PostConstruct
     public void init() {
@@ -71,6 +75,7 @@ public class MessageConsumerProvider implements MessageConsumer {
             NettyClient.getClient().start(NettyClientConfigManager.get().getDefaultClientConfig());
 
             String clientId = this.clientIdProvider.get();
+            LOGGER.info("consumer id={}", clientId);
             this.pullRegister.setDestroyWaitInSeconds(destroyWaitInSeconds);
             this.pullRegister.setMetaServer(metaServer);
             this.pullRegister.setClientId(clientId);
