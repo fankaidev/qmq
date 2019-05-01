@@ -47,6 +47,11 @@ public class OrderService {
         final Message message = producer.generateMessage("order.changed");
         message.setProperty("orderId", order.getOrderId());
         message.setProperty("name", order.getName());
+        StringBuffer buf = new StringBuffer();
+        for (int i = 0; i < 10000; ++i) {
+            buf.append("1234567890");
+        }
+        message.setProperty("content", buf.toString());
         producer.sendMessage(message, new MessageSendStateListener() {
             @Override
             public void onSuccess(Message message) {
