@@ -74,6 +74,7 @@ public class MessageStoreWrapper {
 
     public PullMessageResult findMessages(final PullRequest pullRequest) {
         try {
+            // fk: 没有ack的消息会重复被拉取
             final PullMessageResult unAckMessages = findUnAckMessages(pullRequest);
             if (unAckMessages.getMessageNum() > 0) {
                 return unAckMessages;
