@@ -16,10 +16,13 @@
 
 package qunar.tc.qmq.store;
 
+import lombok.Data;
+
 /**
  * @author keli.wang
  * @since 2018/9/10
  */
+@Data
 public class Snapshot<T> {
     private final long version;
     private final T data;
@@ -29,18 +32,4 @@ public class Snapshot<T> {
         this.data = data;
     }
 
-    public long getVersion() {
-        return version;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    @Override
-    public String toString() {
-        return "Snapshot{" +
-                "version=" + version +
-                '}';
-    }
 }

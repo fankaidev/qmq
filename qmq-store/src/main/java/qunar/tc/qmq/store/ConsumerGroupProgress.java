@@ -16,12 +16,15 @@
 
 package qunar.tc.qmq.store;
 
+import lombok.Data;
+
 import java.util.Map;
 
 /**
  * @author keli.wang
  * @since 2018/10/24
  */
+@Data
 public class ConsumerGroupProgress {
     private final String subject;
     private final String group;
@@ -38,31 +41,4 @@ public class ConsumerGroupProgress {
         this.consumers = consumers;
     }
 
-    public String getSubject() {
-        return subject;
-    }
-
-    public String getGroup() {
-        return group;
-    }
-
-    public boolean isBroadcast() {
-        return broadcast;
-    }
-
-    public void setBroadcast(boolean broadcast) {
-        this.broadcast = broadcast;
-    }
-
-    public Map<String, ConsumerProgress> getConsumers() {
-        return consumers;
-    }
-
-    public long getPull() {
-        return pull;
-    }
-
-    public void setPull(long pull) {
-        this.pull = pull;
-    }
 }

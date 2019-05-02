@@ -16,10 +16,13 @@
 
 package qunar.tc.qmq.store;
 
+import lombok.Data;
+
 /**
  * @author keli.wang
  * @since 2018/7/6
  */
+@Data
 class OffsetBound {
     private final long minOffset;
     private final long maxOffset;
@@ -29,11 +32,4 @@ class OffsetBound {
         this.maxOffset = maxOffset;
     }
 
-    public long getMinOffset() {
-        return minOffset;
-    }
-
-    public long getMaxOffset() {
-        return maxOffset;
-    }
 }
