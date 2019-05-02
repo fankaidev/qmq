@@ -180,6 +180,7 @@ public class LogSegment extends ReferenceObject {
     }
 
     public int flush() {
+//        LOG.info("flush segment {} pos={}", this.fileName, this.wrotePosition.get());
         final int value = wrotePosition.get();
         try {
             if (fileChannel.position() != 0) {

@@ -229,6 +229,7 @@ public class CheckpointManager implements AutoCloseable {
 
     private void updateMaxPulledMessageSequence(final String subject, final String group, final boolean broadcast, final long maxSequence) {
         final ConsumerGroupProgress progress = getOrCreateConsumerGroupProgress(subject, group, broadcast);
+        LOG.info("updateMaxPulledMessageSequence, {} {} {}", subject, group, maxSequence);
         progress.setPull(maxSequence);
     }
 

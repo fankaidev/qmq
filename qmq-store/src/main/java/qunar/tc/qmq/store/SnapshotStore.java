@@ -136,6 +136,7 @@ public class SnapshotStore<T> {
     }
 
     public synchronized void saveSnapshot(final Snapshot<T> snapshot) {
+        LOG.info("save snapshot, version={}, file={}", snapshot.getVersion(), getSnapshotFile(snapshot));
         if (snapshots.containsKey(snapshot.getVersion())) {
             return;
         }
