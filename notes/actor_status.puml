@@ -1,0 +1,29 @@
+@startuml
+
+state Actor {
+
+  Suspended --> Resumed : resume
+  Resumed --> Suspended : suspend
+  Suspended --> Suspended : resume/suspend
+
+  state Resumed {
+    [*] --> Open : dispatch新的任务
+    Open --> [*] : 任务为空
+    Open --> Scheduled : 开始排队
+    state "Processing*" as Processing
+    Scheduled --> Processing : 开始执行
+    Processing --> Open : 时间片耗尽
+  }
+
+  state Suspended {
+    state "Scheduled" as Scheduled1
+    state "Open" as Open1
+    state "Processing*" as Processing1
+    Scheduled1 --> Processing1
+    Processing1 --> Open1
+    Open1 --> [*]
+  }
+}
+
+
+@enduml
