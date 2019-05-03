@@ -16,6 +16,10 @@
 
 package qunar.tc.qmq.base;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import qunar.tc.qmq.store.SnapshotStore;
+
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -25,15 +29,20 @@ import java.util.concurrent.locks.ReentrantLock;
  * @since 2017/8/1
  */
 public class ConsumerSequence {
+    private static final Logger LOG = LoggerFactory.getLogger(ConsumerSequence.class);
+
+
+    private final String consumerId;
     private final AtomicLong pullSequence;
     private final AtomicLong ackSequence;
 
     private final Lock pullLock = new ReentrantLock();
     private final Lock ackLock = new ReentrantLock();
 
-    public ConsumerSequence(final long pullSequence, final long ackSequence) {
+    public ConsumerSequence(final long pullSequence, final long ackSequence, final String consumerId) {
         this.pullSequence = new AtomicLong(pullSequence);
         this.ackSequence = new AtomicLong(ackSequence);
+        this.consumerId = consumerId;
     }
 
     public long getPullSequence() {
@@ -41,6 +50,7 @@ public class ConsumerSequence {
     }
 
     public void setPullSequence(long pullSequence) {
+        LOG.info("set pull seq={}, {}", pullSequence, consumerId);
         this.pullSequence.set(pullSequence);
     }
 
@@ -49,6 +59,7 @@ public class ConsumerSequence {
     }
 
     public void setAckSequence(long ackSequence) {
+        LOG.info("set ack seq={}, {}", ackSequence, consumerId);
         this.ackSequence.set(ackSequence);
     }
 

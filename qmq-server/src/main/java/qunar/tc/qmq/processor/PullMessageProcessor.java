@@ -197,6 +197,7 @@ public class PullMessageProcessor extends AbstractRequestProcessor implements Fi
 
     @Override
     public void onEvent(final ConsumerLogWroteEvent e) {
+//        LOG.info("ConsumerLogWroteEvent = {}", e);
         if (!e.isSuccess() || Strings.isNullOrEmpty(e.getSubject())) {
             return;
         }

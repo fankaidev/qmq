@@ -27,7 +27,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 class Subscriber {
     //3分钟无心跳，则认为暂时离线
-    private static final long OFFLINE_LEASE_MILLIS = TimeUnit.MINUTES.toMillis(3);
+    private static final long OFFLINE_LEASE_MILLIS = TimeUnit.MINUTES.toMillis(1);
 
     //2天都没有心跳则认为该consumer永久离线
     private static final long FOREVER_LEASE_MILLIS = TimeUnit.MINUTES.toMillis(10);

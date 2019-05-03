@@ -77,7 +77,7 @@ class PullMessageWorker implements ActorSystem.Processor<PullMessageProcessor.Pu
                 || entry.isTimeout()) {
 
             if (pullMessageResult.getMessageNum() > 0) {
-                LOG.info("process pull {}", entry.pullRequest);
+                LOG.info("process pull {}, result={}", entry.pullRequest, pullMessageResult);
             }
 
             entry.processMessageResult(pullMessageResult);

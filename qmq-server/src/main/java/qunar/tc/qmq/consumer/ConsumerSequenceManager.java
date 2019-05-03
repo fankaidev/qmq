@@ -86,7 +86,7 @@ public class ConsumerSequenceManager {
             result.putIfAbsent(consumerId, consumerSequences);
         }
 
-        final ConsumerSequence consumerSequence = new ConsumerSequence(consumer.getPull(), consumer.getAck());
+        final ConsumerSequence consumerSequence = new ConsumerSequence(consumer.getPull(), consumer.getAck(), consumerId);
         final ConsumerGroup consumerGroup = new ConsumerGroup(consumer.getSubject(), consumer.getGroup());
         consumerSequences.putIfAbsent(consumerGroup, consumerSequence);
 
@@ -144,7 +144,7 @@ public class ConsumerSequenceManager {
                 QMon.consumerDuplicateAckCountInc(subject, group, (int) (confirmedAckSequence - lastPullSequence));
                 return true;
             }
-            LOG.info("put ack last={}, confirmed={}, {}", lastPullSequence, confirmedAckSequence, ackEntry);
+            LOG.info("put ack confirmed={}, {}", confirmedAckSequence, ackEntry);
             final long lostAckCount = firstPullSequence - confirmedAckSequence;
             if (lostAckCount <= 0) {
                 LOG.warn("receive some duplicate ack, ackEntry:{}, consumerSequence:{}", ackEntry, consumerSequence);
@@ -183,6 +183,7 @@ public class ConsumerSequenceManager {
     }
 
     public boolean putAction(final Action action) {
+        LOG.info("put action {}", action);
         final PutMessageResult putMessageResult = storage.putAction(action);
         if (putMessageResult.getStatus() == PutMessageStatus.SUCCESS) {
             return true;
@@ -194,10 +195,14 @@ public class ConsumerSequenceManager {
     }
 
     void putNeedRetryMessages(String subject, String group, String consumerId, long firstNotAckedOffset, long lastPullLogOffset) {
+        LOG.info("putNeedRetryMessages {} {} {} {}", subject, consumerId, firstNotAckedOffset, lastPullLogOffset);
         if (noPullLog(subject, group, consumerId)) return;
 
         // get error msg
         final List<SegmentBuffer> needRetryMessages = getNeedRetryMessages(subject, group, consumerId, firstNotAckedOffset, lastPullLogOffset);
+
+        LOG.info("got need retry messages, size={}", needRetryMessages.size());
+
         // put error msg
         putNeedRetryMessages(subject, group, consumerId, needRetryMessages);
     }
@@ -249,6 +254,7 @@ public class ConsumerSequenceManager {
                 }
 
                 final PutMessageResult putMessageResult = storage.appendMessage(rawMessage);
+                LOG.info("put message error, consumer:{} {} {}, status:{}", subject, group, consumerId, putMessageResult.getStatus());
                 if (putMessageResult.getStatus() != PutMessageStatus.SUCCESS) {
                     LOG.error("put message error, consumer:{} {} {}, status:{}", subject, group, consumerId, putMessageResult.getStatus());
                     throw new RuntimeException("put retry message error");
@@ -279,7 +285,7 @@ public class ConsumerSequenceManager {
         final ConsumerGroup consumerGroup = new ConsumerGroup(subject, group);
         ConsumerSequence consumerSequence = consumerSequences.get(consumerGroup);
         if (consumerSequence == null) {
-            final ConsumerSequence newConsumerSequence = new ConsumerSequence(ACTION_LOG_ORIGIN_OFFSET, ACTION_LOG_ORIGIN_OFFSET);
+            final ConsumerSequence newConsumerSequence = new ConsumerSequence(ACTION_LOG_ORIGIN_OFFSET, ACTION_LOG_ORIGIN_OFFSET, consumerId);
             consumerSequence = ObjectUtils.defaultIfNull(consumerSequences.putIfAbsent(consumerGroup, newConsumerSequence), newConsumerSequence);
         }
         return consumerSequence;

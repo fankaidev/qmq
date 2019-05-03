@@ -97,7 +97,7 @@ public class SubscriberStatusChecker implements ActorSystem.Processor<Subscriber
 
     public void start() {
         executor = Executors.newSingleThreadScheduledExecutor(new NamedThreadFactory("consumer-checker"));
-        executor.scheduleWithFixedDelay(this, 5, 3, TimeUnit.MINUTES);
+        executor.scheduleWithFixedDelay(this, 1, 1, TimeUnit.MINUTES);
     }
 
     public void brokerStatusChanged(final Boolean online) {
