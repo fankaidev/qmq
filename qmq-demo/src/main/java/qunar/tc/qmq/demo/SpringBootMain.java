@@ -19,7 +19,9 @@ package qunar.tc.qmq.demo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
+@EnableScheduling
 @SpringBootApplication
 public class SpringBootMain extends SpringBootServletInitializer {
     public static void main(String[] args) {

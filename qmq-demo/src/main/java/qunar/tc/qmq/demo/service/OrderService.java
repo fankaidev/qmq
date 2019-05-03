@@ -18,6 +18,7 @@ package qunar.tc.qmq.demo.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import qunar.tc.qmq.Message;
 import qunar.tc.qmq.MessageProducer;
@@ -27,6 +28,8 @@ import qunar.tc.qmq.demo.model.Order;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
+import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Service
 public class OrderService {
@@ -65,5 +68,14 @@ public class OrderService {
         });
 
         orderRepository.save(order);
+    }
+
+
+    @Scheduled(fixedDelay = 5000)
+    public void placeOrderAuto() {
+        Order order = new Order();
+        order.setOrderId(Instant.now().toEpochMilli());
+        order.setName(LocalDateTime.now().toString());
+        placeOrderDirect(order);
     }
 }

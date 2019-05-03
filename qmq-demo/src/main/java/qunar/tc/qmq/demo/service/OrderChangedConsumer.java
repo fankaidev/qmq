@@ -22,18 +22,50 @@ import org.springframework.stereotype.Service;
 import qunar.tc.qmq.Message;
 import qunar.tc.qmq.consumer.annotation.QmqConsumer;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 @Service
 public class OrderChangedConsumer {
 
     private static final Logger LOG = LoggerFactory.getLogger(OrderChangedConsumer.class);
 
-    @QmqConsumer(subject = "order.changed", consumerGroup = "ordercenter", executor = "workerExecutor")
+    private static Map<String, Message> messages = new ConcurrentHashMap<>();
+
+    private static synchronized boolean check(String messageId) {
+        if (messages.size() > 3) {
+            messages.remove(messageId);
+            LOG.info("current messages = ({})", messages.keySet());
+            return true;
+        }
+        return false;
+    }
+
+    @QmqConsumer(subject = "order.changed", consumerGroup = "cg1", executor = "workerExecutor")
     public void onMessage(Message message) {
         long orderId = message.getLongProperty("orderId");
         String name = message.getStringProperty("name");
 
-        LOG.info("consume msg {}", message.getMessageId());
+        LOG.info("begin consume msg {}", message.getMessageId());
+
+//        if (message.getMessageId().endsWith("3")) {
+//            LOG.error("exit");
+//            System.exit(1);
+//        }
+
+        messages.put(message.getMessageId(), message);
+
+        while (true) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (check(message.getMessageId())) break;
+        }
 
         //do work
+        LOG.info("end consume msg {}", message.getMessageId());
+
     }
 }
