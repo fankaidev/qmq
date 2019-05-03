@@ -430,6 +430,7 @@ public class DefaultStorage implements Storage {
 
         @Override
         public void onEvent(final MessageLogMeta event) {
+            LOG.info("on new msg {}", event.getSequence());
             if (isFirstEventOfLogSegment(event)) {
                 LOG.info("first event of log segment. event: {}", event);
                 // TODO(keli.wang): need catch all exception here?

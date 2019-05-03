@@ -16,6 +16,10 @@
 
 package qunar.tc.qmq.store.action;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 import qunar.tc.qmq.store.Action;
 import qunar.tc.qmq.store.ActionType;
 
@@ -23,6 +27,7 @@ import qunar.tc.qmq.store.ActionType;
  * @author keli.wang
  * @since 2018/8/20
  */
+@Data
 public class ForeverOfflineAction implements Action {
     private final String subject;
     private final String group;
@@ -62,13 +67,4 @@ public class ForeverOfflineAction implements Action {
         return timestamp;
     }
 
-    @Override
-    public String toString() {
-        return "ForeverOfflineAction{" +
-                "subject='" + subject + '\'' +
-                ", group='" + group + '\'' +
-                ", consumerId='" + consumerId + '\'' +
-                ", timestamp=" + timestamp +
-                '}';
-    }
 }

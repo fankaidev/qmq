@@ -16,12 +16,14 @@
 
 package qunar.tc.qmq.store.action;
 
+import lombok.Data;
 import qunar.tc.qmq.store.Action;
 
 /**
  * @author keli.wang
  * @since 2017/10/16
  */
+@Data
 public class ActionEvent {
     private final long offset;
     private final Action action;
@@ -31,11 +33,4 @@ public class ActionEvent {
         this.action = action;
     }
 
-    public long getOffset() {
-        return offset;
-    }
-
-    public Action getAction() {
-        return action;
-    }
 }

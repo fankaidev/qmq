@@ -17,6 +17,8 @@
 package qunar.tc.qmq.store;
 
 import lombok.Data;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 表示一个消费者的消费进度。
@@ -31,6 +33,8 @@ public class ConsumerProgress {
     private final String subject;
     private final String group;
     private final String consumerId;
+
+    private static final Logger LOG = LoggerFactory.getLogger(ConsumerProgress.class);
 
     private long pull;
     private long ack;
@@ -49,6 +53,17 @@ public class ConsumerProgress {
         this.consumerId = progress.getConsumerId();
         this.pull = progress.getPull();
         this.ack = progress.getAck();
+    }
+
+
+    public void setPull(long pull) {
+        LOG.info("set pull={}, consumerId={}", pull, consumerId);
+        this.pull = pull;
+    }
+
+    public void setAck(long ack) {
+        LOG.info("set ack={}, consumerId={}", ack, consumerId);
+        this.ack = ack;
     }
 
 }

@@ -48,6 +48,7 @@ public class ConsumeQueue {
     }
 
     public synchronized void setNextSequence(long nextSequence) {
+//        LOG.info("set next seq={} group={}", nextSequence, group);
         this.nextSequence.set(nextSequence);
     }
 

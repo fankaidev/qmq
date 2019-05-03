@@ -16,47 +16,18 @@
 
 package qunar.tc.qmq.store;
 
+import lombok.Data;
+
 /**
  * Created by zhaohui.yu
  * 9/3/18
  */
+@Data
 public class ConsumerLogEntry {
     private long timestamp;
     private long wroteOffset;
     private int wroteBytes;
     private short headerSize;
-
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public long getWroteOffset() {
-        return wroteOffset;
-    }
-
-    public void setWroteOffset(long wroteOffset) {
-        this.wroteOffset = wroteOffset;
-    }
-
-    public int getWroteBytes() {
-        return wroteBytes;
-    }
-
-    public void setWroteBytes(int wroteBytes) {
-        this.wroteBytes = wroteBytes;
-    }
-
-    public short getHeaderSize() {
-        return headerSize;
-    }
-
-    public void setHeaderSize(short headerSize) {
-        this.headerSize = headerSize;
-    }
 
     public static class Factory {
         private static final ThreadLocal<ConsumerLogEntry> ENTRY = ThreadLocal.withInitial(() -> new ConsumerLogEntry());

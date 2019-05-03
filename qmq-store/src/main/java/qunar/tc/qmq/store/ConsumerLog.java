@@ -156,8 +156,8 @@ public class ConsumerLog {
             workingBuffer.putInt(message.getSize());
             workingBuffer.putShort(message.getHeaderSize());
             targetBuffer.put(workingBuffer.array(), 0, CONSUMER_LOG_UNIT_BYTES);
-            LOG.info("wroteOffset={}, baseOffset={}, target={}, message={}",
-                    wroteOffset, baseOffset, targetBuffer.position(), message);
+//            LOG.info("wroteOffset={}, baseOffset={}, target={}, message={}",
+//                    wroteOffset, baseOffset, targetBuffer.position(), message);
             return new AppendMessageResult<>(AppendMessageStatus.SUCCESS, wroteOffset, CONSUMER_LOG_UNIT_BYTES);
         }
     }

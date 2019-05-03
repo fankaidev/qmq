@@ -16,10 +16,13 @@
 
 package qunar.tc.qmq.store;
 
+import lombok.Data;
+
 /**
  * @author keli.wang
  * @since 2017/7/13
  */
+@Data
 public class ConsumerLogWroteEvent {
     private final String subject;
     private final boolean success;
@@ -29,11 +32,4 @@ public class ConsumerLogWroteEvent {
         this.success = success;
     }
 
-    public String getSubject() {
-        return subject;
-    }
-
-    public boolean isSuccess() {
-        return success;
-    }
 }

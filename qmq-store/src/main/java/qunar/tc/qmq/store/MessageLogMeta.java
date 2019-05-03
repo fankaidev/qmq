@@ -16,10 +16,13 @@
 
 package qunar.tc.qmq.store;
 
+import lombok.Data;
+
 /**
  * @author keli.wang
  * @since 2017/8/23
  */
+@Data
 public class MessageLogMeta {
     private final String subject;
     private final long sequence;
@@ -37,40 +40,5 @@ public class MessageLogMeta {
         this.baseOffset = baseOffset;
     }
 
-    public String getSubject() {
-        return subject;
-    }
 
-    public long getSequence() {
-        return sequence;
-    }
-
-
-    public long getWroteOffset() {
-        return wroteOffset;
-    }
-
-    public int getWroteBytes() {
-        return wroteBytes;
-    }
-
-    public short getHeaderSize() {
-        return headerSize;
-    }
-
-    public long getBaseOffset() {
-        return baseOffset;
-    }
-
-    @Override
-    public String toString() {
-        return "MessageLogMeta{" +
-                "subject='" + subject + '\'' +
-                ", sequence=" + sequence +
-                ", wroteOffset=" + wroteOffset +
-                ", wroteBytes=" + wroteBytes +
-                ", headerSize=" + headerSize +
-                ", baseOffset=" + baseOffset +
-                '}';
-    }
 }

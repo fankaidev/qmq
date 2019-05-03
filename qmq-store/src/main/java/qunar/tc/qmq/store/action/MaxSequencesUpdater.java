@@ -16,6 +16,8 @@
 
 package qunar.tc.qmq.store.action;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import qunar.tc.qmq.store.CheckpointManager;
 import qunar.tc.qmq.store.event.FixedExecOrderEventBus;
 
@@ -24,6 +26,9 @@ import qunar.tc.qmq.store.event.FixedExecOrderEventBus;
  * @since 2017/8/21
  */
 public class MaxSequencesUpdater implements FixedExecOrderEventBus.Listener<ActionEvent> {
+
+    private static final Logger LOG = LoggerFactory.getLogger(MaxSequencesUpdater.class);
+
     private final CheckpointManager manager;
 
     public MaxSequencesUpdater(final CheckpointManager manager) {
@@ -32,6 +37,7 @@ public class MaxSequencesUpdater implements FixedExecOrderEventBus.Listener<Acti
 
     @Override
     public void onEvent(final ActionEvent event) {
+//        LOG.info("action event type={} offset={}", event.getAction().type(), event.getOffset());
         final long offset = event.getOffset();
 
         switch (event.getAction().type()) {

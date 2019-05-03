@@ -16,6 +16,9 @@
 
 package qunar.tc.qmq.store.action;
 
+import lombok.Data;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import qunar.tc.qmq.store.Action;
 import qunar.tc.qmq.store.ActionType;
 
@@ -23,11 +26,13 @@ import qunar.tc.qmq.store.ActionType;
  * @author yunfeng.yang
  * @since 2017/8/28
  */
+@Data
 public class RangeAckAction implements Action {
     private final String subject;
     private final String group;
     private final String consumerId;
     private final long timestamp;
+    private static final Logger LOG = LoggerFactory.getLogger(RangeAckAction.class);
 
     private final long firstSequence;
     private final long lastSequence;
@@ -40,6 +45,8 @@ public class RangeAckAction implements Action {
 
         this.firstSequence = firstSequence;
         this.lastSequence = lastSequence;
+
+//        LOG.info("new ack {}", this.toString());
     }
 
     @Override
@@ -67,22 +74,4 @@ public class RangeAckAction implements Action {
         return timestamp;
     }
 
-    public long getFirstSequence() {
-        return firstSequence;
-    }
-
-    public long getLastSequence() {
-        return lastSequence;
-    }
-
-    @Override
-    public String toString() {
-        return "RangeAckAction{" +
-                "subject='" + subject + '\'' +
-                ", group='" + group + '\'' +
-                ", consumerId='" + consumerId + '\'' +
-                ", firstSequence=" + firstSequence +
-                ", lastSequence=" + lastSequence +
-                '}';
-    }
 }

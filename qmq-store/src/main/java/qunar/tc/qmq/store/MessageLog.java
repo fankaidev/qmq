@@ -284,8 +284,8 @@ public class MessageLog implements AutoCloseable {
 
                 MessageSequence messageSequence = new MessageSequence(sequence, payloadOffset);
 
-                LOG.info("wroteOffset={}, baseOffset={}, target={}, recordSize={}, seq={}",
-                        wroteOffset, baseOffset, targetBuffer.position(), recordSize, messageSequence);
+//                LOG.info("wroteOffset={}, baseOffset={}, target={}, recordSize={}, seq={}",
+//                        wroteOffset, baseOffset, targetBuffer.position(), recordSize, messageSequence);
                 return new AppendMessageResult<>(AppendMessageStatus.SUCCESS, wroteOffset,
                         recordSize, messageSequence);
             }

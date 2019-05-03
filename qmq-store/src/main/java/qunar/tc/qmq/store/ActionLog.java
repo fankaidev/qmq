@@ -150,8 +150,8 @@ public class ActionLog {
                 targetBuffer.put(workingBuffer.array(), 0, size);
 
                 MessageSequence messageSequence = new MessageSequence(wroteOffset, wroteOffset);
-                LOG.info("wroteOffset={}, baseOffset={}, target={}, size={}, seq={}",
-                        wroteOffset, baseOffset, targetBuffer.position(), size, messageSequence);
+//                LOG.info("wroteOffset={}, baseOffset={}, target={}, size={}, seq={}",
+//                        wroteOffset, baseOffset, targetBuffer.position(), size, messageSequence);
                 return new AppendMessageResult<>(AppendMessageStatus.SUCCESS, wroteOffset, size,
                         messageSequence);
             }

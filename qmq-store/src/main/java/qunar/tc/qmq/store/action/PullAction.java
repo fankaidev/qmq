@@ -17,6 +17,7 @@
 package qunar.tc.qmq.store.action;
 
 import com.google.common.base.Preconditions;
+import lombok.Data;
 import qunar.tc.qmq.store.Action;
 import qunar.tc.qmq.store.ActionType;
 
@@ -24,6 +25,7 @@ import qunar.tc.qmq.store.ActionType;
  * @author keli.wang
  * @since 2017/8/20
  */
+@Data
 public class PullAction implements Action {
     private final String subject;
     private final String group;
@@ -86,49 +88,4 @@ public class PullAction implements Action {
         return timestamp;
     }
 
-    public boolean isBroadcast() {
-        return broadcast;
-    }
-
-    /**
-     * 在pull log中第一个偏移
-     */
-    public long getFirstSequence() {
-        return firstSequence;
-    }
-
-    /**
-     * 在pull log中最后一个偏移
-     */
-    public long getLastSequence() {
-        return lastSequence;
-    }
-
-    /**
-     * 在consuemr log中第一个偏移
-     */
-    public long getFirstMessageSequence() {
-        return firstMessageSequence;
-    }
-
-    /**
-     * 在consumer log中最后一个偏移
-     */
-    public long getLastMessageSequence() {
-        return lastMessageSequence;
-    }
-
-    @Override
-    public String toString() {
-        return "PullAction{" +
-                "subject='" + subject + '\'' +
-                ", group='" + group + '\'' +
-                ", consumerId='" + consumerId + '\'' +
-                ", broadcast=" + broadcast +
-                ", firstSequence=" + firstSequence +
-                ", lastSequence=" + lastSequence +
-                ", firstMessageSequence=" + firstMessageSequence +
-                ", lastMessageSequence=" + lastMessageSequence +
-                '}';
-    }
 }
