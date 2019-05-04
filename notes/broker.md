@@ -116,7 +116,7 @@ Pull流程主要操作在PullMessageWorker.process()中，这里使用了这里�
   - 首先检查当前consumer有没有尚未ack的messages，如果有的话就返回这些messages。
     内存中对于每个consumer都使用一个ConsumerSequence的结构来记录pull和ack的位置，因此简单比较即能找到相应的messages。
   - 否则从consumer log中获取新的尚未pull的messages，就是使用上面说的`storage.pollMessages()`接口。
-    内存中维护了一个ConsumeQueue的结构，记录每一个consumer log的当前offset，因此可以根据这个offset来获取后面的messages。
+    内存中维护了一个ConsumeQueue的结构，记录每一个consumer group下一次拉取的sequence，因此可以根据这个sequence来获取后面的messages。
     操作完成后，当然也需要更新相应的ConsumeQueue和ConsumerSequence。
   - 获取的消息会根据message tag进行过滤。
   - 如果能够获取到messages，就可以直接返回了
@@ -207,6 +207,33 @@ QMQ的实现挺巧妙的，不需要回退pull进度，而是直接ack这些消�
 触发RetryTask的逻辑在SubscriberStatusChecker中。这里一个subscriber就是一个consumer。
 broker启动的时候，会调用startConsumerCheck()，设置每分钟检查各个consumer的状态，
 一旦发现consumer三分钟没有响应就认为是OFFLINE状态，并触发`RetryTask.run()`。
+
+### 如何支持广播？
+
+在创建consumer的时候，有两个参数，分别是group和broadcast。
+当broadcast为true即代表这个是一个广播消息的consumer，会忽略group的值。
+当group为空时，则会自动把broadcast设置为true，也是设置为广播消息。
+
+作为广播消息的consumer，即表示会接收一个subject下面所有的消息，换个角度看，可以认为是一个独立的consumer group。
+QMQ正是这么处理的，对于广播消息的consumer，会把真实的group设置为consumerId，这样从broker看起来，这就是一个独立的消费组，自然可以拉取到所有的消息了。
+
+```
+    public PullConsumer getOrCreatePullConsumer(String subject, String group, boolean isBroadcast) {
+        init();
+
+        Preconditions.checkArgument(!Strings.isNullOrEmpty(subject), "subject不能是nullOrEmpty");
+        if (!isBroadcast) {
+            Preconditions.checkArgument(!Strings.isNullOrEmpty(group), "非广播订阅时，group不能是nullOrEmpty");
+        } else {
+            group = clientIdProvider.get();
+        }
+        return pullConsumerFactory.getOrCreateDefault(subject, group, isBroadcast);
+    }
+```
+
+broker对于广播消息也有一些特殊的处理，不需要记录pull log了，因为既然一个consumer group里只有一个consumerId，
+就不需要额外存盘consumer维度的信息了。
+
 
 ### 小结
 必须说QMQ的代码质量确实很高，不论是架构还是命名还是流程都算得上很清晰，在了解了基本设计后，花几天功夫应该是能够把主流程看明白的。
