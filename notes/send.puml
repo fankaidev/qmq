@@ -1,0 +1,53 @@
+@startuml
+title Message发送流程
+start
+  if () then (不带存储)
+    :直接进入send();
+  else (带存储)
+    if () then (非事务消息)
+      :调用save()存盘;
+    else (事务消息)
+      :第一次发送时，初始化
+      内存中的message holder,
+      每次send只是加入holder;
+      :在事务commit之前，
+      对于holder中的messages
+      依次调用save()存盘;
+      :在事务commit之后，
+      对于holder中的messages
+      依次调用send()开始发送;
+    endif
+  endif
+
+partition ProduceMessage.send() {
+  fork
+    if () then (成功加入发送队列)
+      :no op;
+    else (发送队列已满，无法加入)
+      if () then (带存储)
+        :message
+        已落盘，
+        等待补偿
+        服务重发;
+      else (不带存储)
+        :等待50ms重试，
+        如果再失败
+        取消发送;
+      endif
+    endif
+  fork again
+    :独立的BatchExecutor线程
+    不断从发送队列中批量取出
+    messages并发送到broker;
+    if () then (发送成功)
+      :调用finish()
+      删除数据库记录;
+    else (发送失败)
+      :重试一定次数，
+      如果依然失败放弃;
+    endif
+  end fork
+  stop
+}
+
+@enduml
