@@ -177,7 +177,7 @@ public class ActorSystem {
 
                 queue.pollNode();
                 if (System.currentTimeMillis() >= deadline) {
-                    LOG.info("deadline reached");
+//                    LOG.info("deadline reached");
                     return;
                 }
             }
@@ -229,9 +229,9 @@ public class ActorSystem {
 
         private boolean updateStatus(int oldStatus, int newStatus) {
             boolean success = Unsafe.instance.compareAndSwapInt(this, statusOffset, oldStatus, newStatus);
-            if (success) {
-                LOG.info("{} status {} -> {}", name, oldStatus, newStatus);
-            }
+//            if (success) {
+//                LOG.info("{} status {} -> {}", name, oldStatus, newStatus);
+//            }
             return success;
         }
 
