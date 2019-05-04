@@ -73,7 +73,7 @@ QMQ用了NIO的内存映射文件来实现文件读写，但是写入文件并�
 
 不过这样就有了另外一个问题，即不能从头扫描日志，而是希望从一个比较近的checkpoint开始扫描。
 因此broker中又通过CheckpointManager来记录message log和action log的进度。
-MessageCheckpoint就是记录message log的sequence，ActionCheckpoint则记录了action log的sequence（另外还记了每个consumer的pull和ack位置，但是好像和崩溃恢复没什么关系）。
+MessageCheckpoint就是记录message log的sequence，ActionCheckpoint则记录了action log的sequence，以及各个consumer的pull和ack的位置。
 而这两个checkpoint同样是监听message log和action log的事件来进行更新，并且会和consumer log及pull log以同样的频率刷盘，
 这样理论上启动的时候最多只需要扫描最近一分钟的新日志即可完成重建。
 
@@ -205,9 +205,6 @@ QMQ的实现挺巧妙的，不需要回退pull进度，而是直接ack这些消�
 触发RetryTask的逻辑在SubscriberStatusChecker中。这里一个subscriber就是一个consumer。
 broker启动的时候，会调用startConsumerCheck()，设置每分钟检查各个consumer的状态，
 一旦发现consumer三分钟没有响应就认为是OFFLINE状态，并触发`RetryTask.run()`。
-
-不过这部分操作必须依赖于内存中存储的ack进度，假如这个时候broker也恰好崩溃了，看起来是无法从日志中恢复的？
-
 
 ### 小结
 必须说QMQ的代码质量确实很高，不论是架构还是命名还是流程都算得上很清晰，在了解了基本设计后，花几天功夫应该是能够把主流程看明白的。
