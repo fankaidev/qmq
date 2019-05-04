@@ -65,7 +65,9 @@ QMQ用了NIO的内存映射文件来实现文件读写，但是写入文件并�
   对于message和action存储，这部分工作由PeriodFlushService来提供，默认是每500ms刷盘一次。这个基本上和mysql的默认操作(每秒刷盘)类似。
 - consumer log和pull log并不是由用户操作直接触发的，而是分别由message log和action log的事件进一步触发的，可以认为是前两种日志的snapshot，
   理论上可以由前两种日志的内容恢复而来，因此在安全要求上会低一些。
-  对应这两种日志，有专门的PullLogFlusher、ConsumerLogFlusher进行处理，默认是每分钟才刷盘一次。
+  对应这两种日志，有专门的PullLogFlusher、ConsumerLogFlusher进行处理。
+  而刷盘的触发条件有两种，一是达到一定的事件次数（默认10000次，可配置），二是达到一定的时间间隔（目前是1分钟）。
+
 这些flusher都是在ServerWrapper中的`initStorage()`来启动。
 
 由于consumer log和pull log的刷盘频率较低，因此有可能当broker从故障中重启的时候，这两者会落后于message log及action log的进度。
@@ -75,7 +77,7 @@ QMQ用了NIO的内存映射文件来实现文件读写，但是写入文件并�
 因此broker中又通过CheckpointManager来记录message log和action log的进度。
 MessageCheckpoint就是记录message log的sequence，ActionCheckpoint则记录了action log的sequence，以及各个consumer的pull和ack的位置。
 而这两个checkpoint同样是监听message log和action log的事件来进行更新，并且会和consumer log及pull log以同样的频率刷盘，
-这样理论上启动的时候最多只需要扫描最近一分钟的新日志即可完成重建。
+这样理论上启动的时候最多只需要扫描最近10000条（或1分钟）的新日志即可完成重建。
 
 ## broker是怎么启动的？
 
